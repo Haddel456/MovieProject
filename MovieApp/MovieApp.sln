@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MovieApp", "MovieApp.vcxproj", "{99A35CFE-5AA6-41E2-8DB3-1AE028A93E33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A3D9A64-E11A-4FF3-9883-321BCF008EB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mainapp", "mainapp", "{644994D7-70BB-45CC-9492-2D33D2B58CC9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HttpSrc", "HttpSrc\HttpSrc.vcxitems", "{FFF2C59E-C8DD-4A71-8D31-BAA24B49DDC0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGuiSrc", "ImGuiSrc\ImGuiSrc.vcxitems", "{514E7D4C-5512-49E6-80EB-AF450BB2BFB0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGuiLib", "..\ImGuiLib\ImGuiLib.vcxproj", "{43CA1A41-6A17-465E-BCAB-0D6BB061128C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99A35CFE-5AA6-41E2-8DB3-1AE028A93E33}.Debug|x64.ActiveCfg = Debug|x64
+		{99A35CFE-5AA6-41E2-8DB3-1AE028A93E33}.Debug|x64.Build.0 = Debug|x64
+		{99A35CFE-5AA6-41E2-8DB3-1AE028A93E33}.Release|x64.ActiveCfg = Release|x64
+		{99A35CFE-5AA6-41E2-8DB3-1AE028A93E33}.Release|x64.Build.0 = Release|x64
+		{43CA1A41-6A17-465E-BCAB-0D6BB061128C}.Debug|x64.ActiveCfg = Debug|x64
+		{43CA1A41-6A17-465E-BCAB-0D6BB061128C}.Debug|x64.Build.0 = Debug|x64
+		{43CA1A41-6A17-465E-BCAB-0D6BB061128C}.Release|x64.ActiveCfg = Release|x64
+		{43CA1A41-6A17-465E-BCAB-0D6BB061128C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99A35CFE-5AA6-41E2-8DB3-1AE028A93E33} = {644994D7-70BB-45CC-9492-2D33D2B58CC9}
+		{FFF2C59E-C8DD-4A71-8D31-BAA24B49DDC0} = {1A3D9A64-E11A-4FF3-9883-321BCF008EB8}
+		{514E7D4C-5512-49E6-80EB-AF450BB2BFB0} = {1A3D9A64-E11A-4FF3-9883-321BCF008EB8}
+		{43CA1A41-6A17-465E-BCAB-0D6BB061128C} = {644994D7-70BB-45CC-9492-2D33D2B58CC9}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ImGuiSrc\ImGuiSrc.vcxitems*{43ca1a41-6a17-465e-bcab-0d6bb061128c}*SharedItemsImports = 4
+		ImGuiSrc\ImGuiSrc.vcxitems*{514e7d4c-5512-49e6-80eb-af450bb2bfb0}*SharedItemsImports = 9
+		HttpSrc\HttpSrc.vcxitems*{99a35cfe-5aa6-41e2-8db3-1ae028a93e33}*SharedItemsImports = 4
+		HttpSrc\HttpSrc.vcxitems*{fff2c59e-c8dd-4a71-8d31-baa24b49ddc0}*SharedItemsImports = 9
+	EndGlobalSection
+EndGlobal
