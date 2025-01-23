@@ -13,8 +13,8 @@ int main() {
     auto down_th = std::jthread([&] { movie(sharedData); });
     // Start a thread to draw movie data
     auto draw_th = std::jthread([&] {display(sharedData); });
-    down_th.join();
-    draw_th.join();
+    //down_th.join();
+    //draw_th.join();
     return 0;
 }
 
