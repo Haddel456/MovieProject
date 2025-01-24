@@ -89,7 +89,7 @@ void CleanupRenderTarget();
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Main code
-int GuiMain(int, const char**)
+int GuiMain(drawcallback drawfunction, void* obj_ptr)
 {
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
@@ -183,6 +183,9 @@ int GuiMain(int, const char**)
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
+
+        drawfunction(obj_ptr);
+        
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         if (show_demo_window)

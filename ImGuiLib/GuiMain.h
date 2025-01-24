@@ -3,7 +3,9 @@
 #define GUIMAIN_H
 
 
-int GuiMain(int, const char**);
+using drawcallback = void(void*);
+int GuiMain(drawcallback drawfunction, void* obj_ptr);
+
 
 
 
