@@ -3,7 +3,7 @@
 #include"MovieFetcher.h"
 #include <nlohmann/json.hpp>
 #include "SharedMovieData.h"
-
+#include "semaphore"
 
 using namespace std;
 using json = nlohmann::json;
@@ -57,7 +57,8 @@ void MovieFetcher ::operator()(SharedMovieData& sharedData) {
         if (res && res->status == 200) {
             auto json_result = json::parse(res->body);
 
-       /*     std::vector<std::thread> threads;*/
+            //std::vector<std::thread> threads;
+            //std::counting_semaphore<10> semaphore(10);
 
             for (const auto& movieJson : json_result) {
                 Movie movie;
@@ -77,6 +78,11 @@ void MovieFetcher ::operator()(SharedMovieData& sharedData) {
 
                 // Add movie to the shared data
                 sharedData.addMovie(movie);
+                //semaphore.acquire();  // Acquire the semaphore
+                //threads.push_back(std::thread([this, movie, &semaphore] {
+                //    this->downloadImage(movie.primaryImage, movie.id + "_image.jpg");
+                //    semaphore.release();
+                //    }));
             /*    threads.push_back(std::thread(&MovieFetcher::downloadImage, this, movie.primaryImage, movie.id + "_image.jpg"));*/
             }
 
