@@ -5,6 +5,7 @@
 class Display {
 public:
 	void operator()(SharedMovieData& sharedData);
+
 	
 };
 

@@ -79,6 +79,27 @@ bool LoadTextureFromFile(const char* filename, ID3D11ShaderResourceView** out_sr
     return true;
 }
 
+//bool LoadTexture(const char* filename, int& width, int& height) {
+//    ID3D11ShaderResourceView* srv = nullptr;
+//    if (!LoadTextureFromFile(filename, &srv, &width, &height)) {
+//        return false;
+//    }
+//    if (srv) {
+//        srv->Release();
+//        srv = nullptr;
+//    }
+//
+//	return true;
+//}
+
+ID3D11ShaderResourceView* LoadTexture(const char* filename, int& width, int& height) {
+    ID3D11ShaderResourceView* srv = nullptr;
+    if (!LoadTextureFromFile(filename, &srv, &width, &height)) {
+        return nullptr;  // Return nullptr if the texture loading fails
+    }
+
+    return srv;  // Return the SRV if successful
+}
 
 
 // Forward declarations of helper functions

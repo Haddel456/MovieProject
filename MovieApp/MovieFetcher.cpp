@@ -57,31 +57,32 @@ void MovieFetcher ::operator()(SharedMovieData& sharedData) {
         if (res && res->status == 200) {
             auto json_result = json::parse(res->body);
 
-            std::vector<std::thread> threads;
+       /*     std::vector<std::thread> threads;*/
 
             for (const auto& movieJson : json_result) {
                 Movie movie;
                 movie.id = movieJson.value("id", "");
                 movie.url = movieJson.value("url", "");
-                movie.title = movieJson.value("title", "");
+                movie.title = movieJson.value("primaryTitle", "");
                 movie.primaryImage = movieJson.value("primaryImage", "");
                 movie.description = movieJson.value("description", "");
                 movie.startYear = movieJson.value("startYear", 0);
-                movie.endYear = movieJson.value("endYear", 0);
                 movie.runtimeMinutes = movieJson.value("runtimeMinutes", 0);
-                movie.contentRating = movieJson.value("contentRating", "");
+                movie.contentRating = movieJson.contains("contentRating") && !movieJson["contentRating"].is_null()
+                    ? movieJson["contentRating"].get<std::string>()
+                    : "Not Rated";
                 movie.averageRating = movieJson.value("averageRating", 0.0);
                 movie.numVotes = movieJson.value("numVotes", 0);
                 movie.type = movieJson.value("type", "");
 
                 // Add movie to the shared data
                 sharedData.addMovie(movie);
-                threads.push_back(std::thread(&MovieFetcher::downloadImage, this, movie.primaryImage, movie.id + "_image.jpg"));
+            /*    threads.push_back(std::thread(&MovieFetcher::downloadImage, this, movie.primaryImage, movie.id + "_image.jpg"));*/
             }
 
-            for (auto& t : threads) {
+       /*     for (auto& t : threads) {
                 t.join();
-            }
+            }*/
 
             // Mark data as ready
             sharedData.setDataReady(true);
