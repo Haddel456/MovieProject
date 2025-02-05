@@ -2,74 +2,87 @@
 #include "../ImGuiLib/GuiMain.h"
 #include "SharedMovieData.h"
 #include <imgui.h>
+#include <string>
+
 
 
 // show the result on screen 
 // show the movie 
 
+
+void CenteredText(const std::string& text) {
+    float columnWidth = ImGui::GetColumnWidth();
+    float textWidth = ImGui::CalcTextSize(text.c_str()).x;
+    float offsetX = (columnWidth - textWidth) * 0.5f; // Center the text
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetX);
+    ImGui::Text("%s", text.c_str());
+}
+
+
 void DrawMovieWindow(void* sharedData) {
+    ImGui::SetNextWindowSize(ImVec2(1000, 600), ImGuiCond_FirstUseEver);
+    auto data = (SharedMovieData*)sharedData;
+    auto movies = data->getMovies();
 
-	// ImGui::Begin("Top 250 Movies");
-	 auto data = (SharedMovieData*)sharedData;
-	 auto movies = data->getMovies();
+    ImGui::Begin("Top 250 Movies");
 
-	 // Check if the data is ready
-	 if (!data->isDataReady()) {
-	     ImGui::Text("No data available. Please wait...");
-	     return;
-	 }
+    int columns = 4; // Number of movies per row
+    if (ImGui::BeginTable("MovieTable", columns, ImGuiTableFlags_SizingStretchSame)) {
+        int movieIndex = 0;
 
-	// Display each movie's information
+        for (const auto& movie : movies) {
+            if (movieIndex % columns == 0) {
+                ImGui::TableNextRow(); // Start a new row after every 'columns' movies
+            }
 
-	     for (const auto& movie : movies) {
-			 int imageWidth = 0, imageHeight = 0;
-			 std::string imagePath = movie.id + "_image.jpg";
+            ImGui::TableNextColumn();
 
-			 //if (LoadTexture(imagePath.c_str(), imageWidth, imageHeight)) {
-				// // Use the shader resource view for the movie image (assume srv is available)
-				/* ImGui::Image((ImTextureID)srv, ImVec2((float)imageWidth, (float)imageHeight));*/
-			 //}
-			 //else {
-				// ImGui::Text("Image not available for %s", movie.title.c_str());
-			 //}
+            int imageWidth = 0, imageHeight = 0;
+            std::string imagePath = movie.id + "_image.jpg";
+            ID3D11ShaderResourceView* texture = LoadTexture(imagePath.c_str(), imageWidth, imageHeight);
 
-			 ID3D11ShaderResourceView* texture = LoadTexture(imagePath.c_str(), imageWidth, imageHeight);
+            float columnWidth = ImGui::GetColumnWidth();
+            float imageSizeX = 200.0f, imageSizeY = 200.0f; // Adjust as needed
+            float imageOffsetX = (columnWidth - imageSizeX) * 0.5f;
 
-			 if (texture) {
-				 // Display the image using the SRV
-				 ImGui::Image((ImTextureID)texture, ImVec2((float)imageWidth, (float)imageHeight));
-			 }
-			 else {
-				 ImGui::Text("Image not available for %s", movie.title.c_str());
-			 }
+            if (texture) {
 
-	         ImGui::Separator();
-	         ImGui::Text("Title: %s", movie.title.c_str());
-	         ImGui::Text("Description: %s", movie.description.c_str());
-	         ImGui::Text("Year: %d", movie.startYear);
-	         ImGui::Text("Rating: %.1f", movie.averageRating);
-	         ImGui::Text("Votes: %d", movie.numVotes);
-	         ImGui::Text("Type: %s", movie.type);
 
-	         // Display the movie's URL as a clickable link
-	         if (ImGui::Button("View More")) {
-	             // Implement an action for the button, such as opening the URL in a browser
-	             std::string command = "xdg-open " + movie.url;
-	             system(command.c_str());
-	         }
-	         ImGui::Separator();
-	    
-	     
-	 }
-	 ImGui::End();
+                ImGui::SetCursorPosX(ImGui::GetCursorPosX() + imageOffsetX);
+                ImGui::Image((ImTextureID)texture, ImVec2(imageSizeX, imageSizeY));
+            }
+            else {
+                CenteredText("Image not available");
+            }
 
+
+            CenteredText(movie.title);
+            CenteredText("Year: " + std::to_string(movie.startYear));
+            CenteredText("Rating: " + std::to_string(movie.averageRating));
+
+
+            float buttonWidth = 120.0f; // Adjust as needed
+            float buttonOffsetX = (columnWidth - buttonWidth) * 0.5f;
+            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + buttonOffsetX);
+
+            if (ImGui::Button("View More", ImVec2(buttonWidth, 30))) {
+                std::string command = "xdg-open " + movie.url;
+                system(command.c_str());
+            }
+
+            ImGui::Separator();
+            movieIndex++;
+        }
+
+        ImGui::EndTable();
+    }
+
+    ImGui::End();
 }
 
 void Display::operator()(SharedMovieData& sharedData){
 	GuiMain(DrawMovieWindow, &sharedData);
 	sharedData.exit_flag = true;
 }
-
-
 
 
