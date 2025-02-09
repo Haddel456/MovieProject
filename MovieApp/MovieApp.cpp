@@ -9,44 +9,6 @@
 #include "MovieFetcher.h"
 #include "SharedMovieData.h"
 
-//int main() {
-//    // Create a MovieFetcher object
-//    MovieFetcher fetcher;
-//
-//    // Create a SharedMovieData object
-//    SharedMovieData sharedData;
-//
-//    // Call the fetcher with sharedData
-//    fetcher(sharedData);
-//
-//    // Check if the data is ready
-//    if (sharedData.isDataReady()) {
-//        std::cout << "Movies have been successfully fetched and processed!" << std::endl;
-//
-//        // Retrieve and display movies (assuming getMovies() exists in SharedMovieData)
-//        auto movies = sharedData.getMovies();
-//        for (const auto& movie : movies) {
-//            std::cout << "Movie Title: " << movie.title << std::endl;
-//            std::cout << "Description: " << movie.description << std::endl;
-//            std::cout << "Rating: " << movie.averageRating << std::endl;
-//            std::cout << "-------------------------" << std::endl;
-//        }
-//    }
-//    else {
-//        std::cerr << "Failed to fetch movie data." << std::endl;
-//    }
-//
-//    return 0;
-//}
-
-
-
-
-
-
-
-
-
 int main() {
     SharedMovieData sharedData;
     MovieFetcher movie;
