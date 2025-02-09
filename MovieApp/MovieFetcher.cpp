@@ -8,9 +8,25 @@
 using namespace std;
 using json = nlohmann::json;
 
+std::mutex dataMutex;  // Protect shared data
+std::counting_semaphore<5> downloadSemaphore(5);
 
-void MovieFetcher :: downloadImage(const std::string& imageUrl, const std::string& fileName) {
+void createDirectory(const std::string& path) {
+    // Create the directory if it doesn't exist
+    if (!std::filesystem::exists(path)) {
+        std::filesystem::create_directory(path);
+    }
+}
+
+
+void MovieFetcher::downloadImage(const std::string& imageUrl, const std::string& fileName) {
     try {
+
+        std::string filePath = fileName;
+        if (std::filesystem::exists(filePath)) {
+            std::cout << "Image " << fileName << " already exists, skipping download." << std::endl;
+            return;
+        }
 
         const std::string host = "m.media-amazon.com";
 
@@ -23,6 +39,7 @@ void MovieFetcher :: downloadImage(const std::string& imageUrl, const std::strin
 
         if (res && res->status == 200) {
             // Save the image to a file
+           /* createDirectory("images");*/  // Ensure the folder exists
             std::ofstream file(fileName, std::ios::binary);
             if (file.is_open()) {
                 file.write(res->body.c_str(), res->body.size());
@@ -49,16 +66,14 @@ void MovieFetcher ::operator()(SharedMovieData& sharedData) {
         // should be change 
         std::string url = "/imdb/top250-movies";
         httplib::Headers headers = {
-            {"x-rapidapi-key", "760d915b17mshb2e1c6ba376c55ep14f703jsnf9845a14111d"},
+            {"x-rapidapi-key", "acad3e3611mshec113ca7505c9e9p1633ebjsn47de4f6034fa"},
             {"x-rapidapi-host", "imdb236.p.rapidapi.com"}
         };
 
         auto res = cli.Get(url.c_str(), headers);
         if (res && res->status == 200) {
             auto json_result = json::parse(res->body);
-
-            //std::vector<std::thread> threads;
-            //std::counting_semaphore<10> semaphore(10);
+              std::vector<std::thread> imageThreads;
 
             for (const auto& movieJson : json_result) {
                 Movie movie;
@@ -77,22 +92,28 @@ void MovieFetcher ::operator()(SharedMovieData& sharedData) {
                 movie.type = movieJson.value("type", "");
 
                 // Add movie to the shared data
-                sharedData.addMovie(movie);
-                //semaphore.acquire();  // Acquire the semaphore
-                //threads.push_back(std::thread([this, movie, &semaphore] {
-                //    this->downloadImage(movie.primaryImage, movie.id + "_image.jpg");
-                //    semaphore.release();
-                //    }));
-            /*    threads.push_back(std::thread(&MovieFetcher::downloadImage, this, movie.primaryImage, movie.id + "_image.jpg"));*/
+                {
+                    std::lock_guard<std::mutex> lock(dataMutex);
+                    sharedData.addMovie(movie);  // Thread-safe access
+                }
+
+                // Spawn a new thread to download the image
+                imageThreads.emplace_back([this, movie]() {
+                    downloadSemaphore.acquire();  // Limit concurrency
+                    downloadImage(movie.primaryImage, movie.id + "_image.jpg");
+                    downloadSemaphore.release();
+                    });
             }
 
-       /*     for (auto& t : threads) {
-                t.join();
-            }*/
-
             // Mark data as ready
+            for (auto& thread : imageThreads) {
+                if (thread.joinable()) thread.join();
+            }
+
             sharedData.setDataReady(true);
+
         }
+
         else {
             std::cerr << "HTTP Error: " << (res ? res->status : 0) << std::endl;
         }
