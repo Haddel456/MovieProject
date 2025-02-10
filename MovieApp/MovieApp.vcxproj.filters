@@ -27,6 +27,9 @@
     <ClCompile Include="SharedMovieData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="threadPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MovieFetcher.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SharedMovieData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="threadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

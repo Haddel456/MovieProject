@@ -5,6 +5,8 @@
 
 #include <vector>
 #include<mutex>
+#include <unordered_map>
+
 
 struct Movie {
     std::string id;
@@ -25,6 +27,7 @@ struct Movie {
 class SharedMovieData {
 public:
     void addMovie(const Movie& movie);
+    void markImageReady(const std::string& movieId);
     std::vector<Movie> getMovies() const;
     void setDataReady(bool ready);
     bool isDataReady() const;
@@ -32,6 +35,7 @@ public:
 
 private:
     std::vector<Movie> movies;
+    std::unordered_map<std::string, bool> imageReady;
     bool data_ready = false;
     mutable std::mutex data_mutex;  // `mutable` allows const methods to lock it
 };
