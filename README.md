@@ -1,6 +1,7 @@
 
-# **🎬 IMDb API C++ Project**
 
+  
+<h1 >🎬 IMDb API C++ Project</h1>
 
 ## **📌 Overview**
 - This project is a C++ application that integrates the IMDb API (via RapidAPI) to fetch and display movie-related data. The application utilizes multithreading and ImGui for a graphical user interface (GUI), ensuring smooth performance and responsiveness.
