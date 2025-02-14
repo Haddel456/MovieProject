@@ -47,3 +47,5 @@ RapidAPI key for IMDb API
 - Networking library (Httplib, cURL)
   
 - Stb library _ stb_image : For loading images in various formats (JPEG, PNG, etc.)
+
+---
