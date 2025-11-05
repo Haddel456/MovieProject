@@ -1,0 +1,22 @@
+# Visual Studio cache
+.vs/
+*.VC.db
+*.ipch
+
+# Build outputs
+*.pdb
+*.dll
+*.exe
+*.obj
+*.lib
+*.log
+
+# Intermediate folders
+build/
+x64/
+Debug/
+Release/
+
+# OS-specific files
+*.DS_Store
+Thumbs.db

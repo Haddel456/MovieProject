@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <THIRD_PARTY_DIR>C:\Users\abd-alrhman\source\repos\dev\3rd_party</THIRD_PARTY_DIR>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(THIRD_PARTY_DIR)\httplib;$(THIRD_PARTY_DIR)\opensslx64\include;$(THIRD_PARTY_DIR)\json\include;$(THIRD_PARTY_DIR)\imgui\imgui;$(THIRD_PARTY_DIR)\imgui\imgui\backends;$(THIRD_PARTY_DIR)\stb;$(THIRD_PARTY_DIR)\curl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(THIRD_PARTY_DIR)\opensslx64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="THIRD_PARTY_DIR">
+      <Value>$(THIRD_PARTY_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
