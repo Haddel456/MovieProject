@@ -1,5 +1,7 @@
 ## OSX artifacts
 .DS_Store
+Thumbs.db
+
 
 ## Dear ImGui artifacts
 imgui.ini
@@ -31,6 +33,9 @@ JSON/
 
 ## Commonly used CMake directories
 build*/
+x64/
+Debug/
+Release/
 
 ## Xcode artifacts
 project.xcworkspace
