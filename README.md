@@ -8,11 +8,11 @@
 
 ## **🚀 Features**
 
-- 🎥 Fetch movie details (title, release year, rating, etc.) using the IMDb API.
-- 🖥️ Display data in a user-friendly ImGui-based GUI.
-- ⚡ Implement multithreading to handle API requests efficiently.
-- 🔒 Ensure no race conditions and maintain a well-structured codebase using files and classes.
-- 🖼️ Image caching mechanism to prevent redundant downloads and improve performance.
+- Fetch movie details (title, release year, rating, etc.) using the IMDb API.
+- Display data in a user-friendly ImGui-based GUI.
+- Implement multithreading to handle API requests efficiently.
+- Ensure no race conditions and maintain a well-structured codebase using files and classes.
+- Image caching mechanism to prevent redundant downloads and improve performance.
 
 ## **🛠️ Technologies Used**
 
